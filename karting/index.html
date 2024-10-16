@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>KBRT Telemetry</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="автоспорт, тайминг, гонки, телеметрия">
+    <meta name="description" content="PWA с частной телеметрией картинг центров для подразделений KBRT">
+
+    <!--    <link rel="stylesheet" href="css/outlines.css">-->
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+          rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <header>
+        <!-- Таймер с оставшимся временем -->
+        <div class="timer-display">
+            <span id="remaining-time">30:00</span> / <span id="session-duration">1:00:00</span>
+        </div>
+
+        <!-- Горизонтальное меню для навигации -->
+        <nav class="navbar">
+            <ul>
+                <li><a href="#" id="live-timing-tab" class="active">Live timing</a></li>
+                <li><a href="#" id="lap-log-tab">Lap log</a></li>
+                <li><a href="#" id="pitstop-tab">Pit-stop</a></li>
+            </ul>
+        </nav>
+    </header>
+    <!-- Страница менеджера -->
+    <div id="live-timing-page" class="page active">
+        <!-- Контейнер для Standings и Relatives -->
+        <div class="standings-relatives-container">
+            <!-- Таблица Standings -->
+            <div class="standings-wrapper">
+                <div class="standings-grid">
+                    <div class="grid-header">№</div>
+                    <div class="grid-header">P</div>
+                    <div class="grid-header">Name</div>
+                    <div class="grid-header">Avg</div>
+                    <div class="grid-header">Best</div>
+                    <div class="grid-header">Last</div>
+                    <div class="grid-header">Laps</div>
+                    <div class="grid-header">Pits</div>
+                    <div class="grid-header">Int</div>
+                    <div class="grid-header">G/L</div>
+
+                    <div class="grid-item">27</div>
+                    <div class="grid-item">1</div>
+                    <div class="grid-item">Пилот 1</div>
+                    <div class="grid-item">1:25.678</div>
+                    <div class="grid-item">1:23.456</div>
+                    <div class="grid-item">1:26.234</div>
+                    <div class="grid-item">15</div>
+                    <div class="grid-item">2</div>
+                    <div class="grid-item">+2.345</div>
+                    <div class="grid-item">1</div>
+
+                    <div class="grid-item">52</div>
+                    <div class="grid-item">2</div>
+                    <div class="grid-item">Пилот 2</div>
+                    <div class="grid-item">1:26.789</div>
+                    <div class="grid-item">1:24.000</div>
+                    <div class="grid-item">1:27.123</div>
+                    <div class="grid-item">14</div>
+                    <div class="grid-item">1</div>
+                    <div class="grid-item">+4.567</div>
+                    <div class="grid-item">-1</div>
+
+                    <div class="grid-item">11</div>
+                    <div class="grid-item">3</div>
+                    <div class="grid-item">Пилот 3</div>
+                    <div class="grid-item">1:27.890</div>
+                    <div class="grid-item">1:25.500</div>
+                    <div class="grid-item">1:28.345</div>
+                    <div class="grid-item">13</div>
+                    <div class="grid-item">0</div>
+                    <div class="grid-item">+6.789</div>
+                    <div class="grid-item">0</div>
+                </div>
+            </div>
+
+            <!-- Таблица Relatives -->
+            <div class="relatives-wrapper">
+                <div class="relatives-grid">
+                    <div class="grid-header">№</div>
+                    <div class="grid-header">P</div>
+                    <div class="grid-header">Name</div>
+                    <div class="grid-header">Avg</div>
+                    <div class="grid-header">Gap</div>
+
+                    <div class="grid-item">1</div>
+                    <div class="grid-item">5</div>
+                    <div class="grid-item">Пилот 5</div>
+                    <div class="grid-item">1:26.456</div>
+                    <div class="grid-item">+3.456</div>
+
+                    <div class="grid-item">23</div>
+                    <div class="grid-item">6</div>
+                    <div class="grid-item">Пилот 6</div>
+                    <div class="grid-item">1:27.123</div>
+                    <div class="grid-item">+6.123</div>
+
+                </div>
+
+                <div class="track-map-container">
+                    <p>Тут будет рисоваться карта трека по данным GPS. Я пока не придумал как это сделать, но сделаю</p>
+                    <canvas id="trackMap"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="lap-log-page" class="page">
+        <!-- Табличка Lap Time Log -->
+        <section class="lap-time-log">
+            <div class="lap-log-grid">
+                <div class="grid-header">№</div>
+                <div class="grid-header">Lap</div>
+                <div class="grid-header">Time</div>
+                <div class="grid-header">Delta</div>
+
+                <div class="grid-item">27</div>
+                <div class="grid-item">1</div>
+                <div class="grid-item">1:19.231</div>
+                <div class="grid-item">0</div>
+
+                <div class="grid-item">27</div>
+                <div class="grid-item">2</div>
+                <div class="grid-item">1:20.003</div>
+                <div class="grid-item">+0.772</div>
+
+                <div class="grid-item">27</div>
+                <div class="grid-item">3</div>
+                <div class="grid-item">1.19.331</div>
+                <div class="grid-item">+0.100</div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Страница пит-стопа -->
+    <div id="pitstop-page" class="page">
+        <div class="pitstop-timer-container">
+            <div class="pitstop-wrapper">
+                <section class="karts-status">
+                    <h2>Состояние картов</h2>
+                    <div class="pitstop-grid">
+                        <div class="grid-header">№</div>
+                        <div class="grid-header">Name</div>
+                        <div class="grid-header">State</div>
+                        <div class="grid-header">Optimal pit</div>
+
+                        <div class="grid-item">27</div>
+                        <div class="grid-item">KBRT</div>
+                        <div class="grid-item rocket"></div>
+                        <div class="grid-item"></div>
+
+                        <div class="grid-item">11</div>
+                        <div class="grid-item">Griphunters</div>
+                        <div class="grid-item average"></div>
+                        <div class="grid-item rocket"></div>
+
+                        <div class="grid-item">11</div>
+                        <div class="grid-item">KBRT</div>
+                        <div class="grid-item garbage"></div>
+                        <div class="grid-item"></div>
+
+                        <div class="grid-item">3</div>
+                        <div class="grid-item">KBRT</div>
+                        <div class="grid-item subaverage"></div>
+                        <div class="grid-item"></div>
+
+                        <div class="grid-item">10</div>
+                        <div class="grid-item">KBRT</div>
+                        <div class="grid-item garbage"></div>
+                        <div class="grid-item"></div>
+
+                        <div class="grid-item">4</div>
+                        <div class="grid-item">KBRT</div>
+                        <div class="grid-item subaverage"></div>
+                        <div class="grid-item"></div>
+
+                        <div class="grid-item">19</div>
+                        <div class="grid-item">KBRT</div>
+                        <div class="grid-item garbage"></div>
+                        <div class="grid-item"></div>
+
+                        <div class="grid-item">4</div>
+                        <div class="grid-item">KBRT</div>
+                        <div class="grid-item subaverage"></div>
+                        <div class="grid-item"></div>
+
+                        <div class="grid-item">27</div>
+                        <div class="grid-item">KBRT</div>
+                        <div class="grid-item rocket"></div>
+                        <div class="grid-item"></div>
+
+                        <div class="grid-item">7</div>
+                        <div class="grid-item">KBRT</div>
+                        <div class="grid-item average"></div>
+                        <div class="grid-item"></div>
+
+                        <div class="grid-item">4</div>
+                        <div class="grid-item">KBRT</div>
+                        <div class="grid-item rocket"></div>
+                        <div class="grid-item"></div>
+
+                        <div class="grid-item">15</div>
+                        <div class="grid-item">KBRT</div>
+                        <div class="grid-item garbage"></div>
+                        <div class="grid-item"></div>
+
+                        <div class="grid-item">15</div>
+                        <div class="grid-item">KBRT</div>
+                        <div class="grid-item subaverage"></div>
+                        <div class="grid-item"></div>
+
+                        <div class="grid-item">15</div>
+                        <div class="grid-item">KBRT</div>
+                        <div class="grid-item rocket"></div>
+                        <div class="grid-item"></div>
+
+                        <div class="grid-item">23</div>
+                        <div class="grid-item">KBRT</div>
+                        <div class="grid-item rocket"></div>
+                        <div class="grid-item"></div>
+
+                        <div class="grid-item">15</div>
+                        <div class="grid-item">KBRT</div>
+                        <div class="grid-item average"></div>
+                        <div class="grid-item"></div>
+
+                        <div class="grid-item">6</div>
+                        <div class="grid-item">KBRT</div>
+                        <div class="grid-item subaverage"></div>
+                        <div class="grid-item"></div>
+
+                        <div class="grid-item">17</div>
+                        <div class="grid-item">KBRT</div>
+                        <div class="grid-item rocket"></div>
+                        <div class="grid-item"></div>
+
+                        <div class="grid-item">2</div>
+                        <div class="grid-item">KBRT</div>
+                        <div class="grid-item garbage"></div>
+                        <div class="grid-item"></div>
+
+                        <div class="grid-item">4</div>
+                        <div class="grid-item">KBRT</div>
+                        <div class="grid-item garbage"></div>
+                        <div class="grid-item"></div>
+
+                        <div class="grid-item">15</div>
+                        <div class="grid-item">KBRT</div>
+                        <div class="grid-item average"></div>
+                        <div class="grid-item"></div>
+
+                        <div class="grid-item">22</div>
+                        <div class="grid-item">KBRT</div>
+                        <div class="grid-item garbage"></div>
+                        <div class="grid-item"></div>
+
+                        <div class="grid-item">27</div>
+                        <div class="grid-item">KBRT</div>
+                        <div class="grid-item average"></div>
+                        <div class="grid-item"></div>
+
+                        <div class="grid-item">21</div>
+                        <div class="grid-item">KBRT</div>
+                        <div class="grid-item average"></div>
+                        <div class="grid-item"></div>
+
+                        <div class="grid-item">14</div>
+                        <div class="grid-item">KBRT</div>
+                        <div class="grid-item rocket"></div>
+                        <div class="grid-item"></div>
+
+                        <div class="grid-item">2</div>
+                        <div class="grid-item">KBRT</div>
+                        <div class="grid-item average"></div>
+                        <div class="grid-item"></div>
+
+                        <div class="grid-item">22</div>
+                        <div class="grid-item">KBRT</div>
+                        <div class="grid-item rocket"></div>
+                        <div class="grid-item"></div>
+
+                        <div class="grid-item">12</div>
+                        <div class="grid-item">KBRT</div>
+                        <div class="grid-item subaverage"></div>
+                        <div class="grid-item"></div>
+
+                        <div class="grid-item">4</div>
+                        <div class="grid-item">KBRT</div>
+                        <div class="grid-item rocket"></div>
+                        <div class="grid-item"></div>
+
+                    </div>
+                </section>
+            </div>
+
+            <div class="penalty-timer-wrapper">
+                <section class="penalty-timer">
+                    <h2>Таймер Stop and Go</h2>
+                    <div class="timers">
+                        <button class="timer-btn" data-time="5">5 секунд</button>
+                        <button class="timer-btn" data-time="10">10 секунд</button>
+                        <button class="timer-btn" data-time="15">15 секунд</button>
+                        <button class="timer-btn" data-time="30">30 секунд</button>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="script/script.js"></script>
+</body>
+</html>
